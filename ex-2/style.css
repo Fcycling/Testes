@@ -1,0 +1,17 @@
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  .cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  }
+  
+  .hit {
+  background-color: red;
+  }
+  
+  .miss {
+  background-color: gray;
+  }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jogo de Batalha Naval</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>Jogo de Batalha Naval</h1>
+  <table id="board">
+    <tr>
+        <td class="cell" id="0-0" data-x="0" data-y="0"></td>
+        <td class="cell" id="0-1" data-x="0" data-y="1"></td>
+        <td class="cell" id="0-2" data-x="0" data-y="2"></td>
+        <td class="cell" id="0-3" data-x="0" data-y="3"></td>
+        <td class="cell" id="0-4" data-x="0" data-y="4"></td>
+    </tr>
+    <tr>
+        <td class="cell" id="1-0" data-x="1" data-y="0"></td>
+        <td class="cell" id="1-1" data-x="1" data-y="1"></td>
+        <td class="cell" id="1-2" data-x="2" data-y="2"></td>
+        <td class="cell" id="1-3" data-x="3" data-y="3"></td>
+        <td class="cell" id="1-4" data-x="4" data-y="4"></td>
+    </tr>
+    <tr>
+        <td class="cell" id="2-0" data-x="2" data-y="0"></td>
+        <td class="cell" id="2-1" data-x="2" data-y="1"></td>
+        <td class="cell" id="2-2" data-x="2" data-y="2"></td>
+        <td class="cell" id="2-3" data-x="2" data-y="3"></td>
+        <td class="cell" id="2-4" data-x="2" data-y="4"></td>
+    </tr>
+    <tr>
+        <td class="cell" id="3-0" data-x="3" data-y="0"></td>
+        <td class="cell" id="3-1" data-x="3" data-y="1"></td>
+        <td class="cell" id="3-2" data-x="3" data-y="2"></td>
+        <td class="cell" id="3-3" data-x="3" data-y="3"></td>
+        <td class="cell" id="3-4" data-x="3" data-y="4"></td>
+    </tr>
+    <tr>
+        <td class="cell" id="4-0" data-x="4" data-y="0"></td>
+        <td class="cell" id="4-1" data-x="4" data-y="1"></td>
+        <td class="cell" id="4-2" data-x="4" data-y="2"></td>
+        <td class="cell" id="4-3" data-x="4" data-y="3"></td>
+        <td class="cell" id="4-4" data-x="4" data-y="4"></td>
+    </tr>
+  </table>
+  <form>
+    <label for="x-coord">Coordenada X:</label>
+    <input type="number" id="x-coord" min="0" max="4">
+    <label for="y-coord">Coordenada Y:</label>
+    <input type="number" id="y-coord" min="0" max="4">
+    <button type="button" onclick="fire()">Disparar</button>
+  </form>
+  <p id="result"></p>
+  <script>
+    var ships = [[2, 2], [4, 0], [1, 3]]; // Coordenadas das embarcações
+    var hits = 0; // Número de tiros acertados
+    var misses = 0; // Número de tiros errados
+var board = document.getElementsByClassName("cell"); // Todos os elementos com a classe "cell"
+var gameOver = false;
+
+// Função para verificar se o jogo acabou
+function checkGameOver() {
+  if (hits === ships.length) {
+    document.getElementById("result").innerHTML = "Vitória! Você destruiu todas as embarcações!";
+    gameOver = true;
+  }
+}
+
+function fire() {
+      if (gameOver) {
+        document.getElementById("result").innerHTML = "O jogo acabou! Recarregue a página para jogar novamente.";
+        return;
+      }
+      var x = document.getElementById("x-coord").value;
+      var y = document.getElementById("y-coord").value;
+      if(x<0 || x>4 || y<0 || y>4){
+          document.getElementById("result").innerHTML = "Coordenadas inválidas. Por favor escolha entre 0 e 4.";
+          return;
+      }
+      var cell = document.querySelector('td[data-x="'+x+'"][data-y="'+y+'"]');
+      if (cell.classList.contains("hit") || cell.classList.contains("miss")) {
+        document.getElementById("result").innerHTML = "Você já atirou nessa posição!";
+        return;
+      }
+
+  var hit = false;
+  for (var i = 0 ; i < ships.length; i++) {
+if (x == ships[i][0] && y == ships[i][1]) {
+hit = true;
+hits++;
+cell.classList.add("hit");
+document.getElementById("result").innerHTML = "Acerto! Você destruiu uma embarcação!";
+checkGameOver();
+break;
+}
+}
+if (!hit) {
+misses++;
+cell.classList.add("miss");
+document.getElementById("result").innerHTML = "Errou! Não há nenhuma embarcação nessa posição.";
+}
+}
+</script>
+
+</body>
+</html>
+
+
